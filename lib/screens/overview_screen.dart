@@ -1,3 +1,4 @@
+import 'package:dengue_zero/components/drawer_item.dart';
 import 'package:dengue_zero/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ class OverviewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -17,34 +19,33 @@ class OverviewScreen extends StatelessWidget {
           ),
         ),
       ),
+      drawer: const DrawerItem(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Olá, João!',
+              'Olá, Cidadão',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            const SizedBox(height: 25),
+            SizedBox(height: deviceSize.height * 0.05),
             Text(
               'AJUDE A COMBATER A DENGUE',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            const SizedBox(height: 100),
+            SizedBox(height: deviceSize.height * 0.15),
             ElevatedButton(
               style: Theme.of(context).elevatedButtonTheme.style,
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AppRoutes.NEW_COMPLAINT);
+                Navigator.of(context).pushNamed(AppRoutes.NEW_COMPLAINT_SCREEN);
               },
               child: const Text('NOVA DENÚNCIA'),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: deviceSize.height * 0.05),
             ElevatedButton(
               style: Theme.of(context).elevatedButtonTheme.style,
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AppRoutes.MY_COMPLAINTS);
+                Navigator.of(context).pushNamed(AppRoutes.MY_COMPLAINTS_SCREEN);
               },
               child: const Text('MINHAS DENÚNCIAS'),
             ),
