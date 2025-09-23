@@ -1,16 +1,22 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dengue_zero/data/repositories/auth/auth_repository.dart';
 import 'package:dengue_zero/data/services/local_storage/storage.dart';
+import 'package:dengue_zero/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
   String? _token;
   String? _email;
   String? _uid;
+  String? _name;
   DateTime? _expiryDate;
   Timer? _logoutTimer;
+
+  final String _baseUrl = AppConfig.backendUrl;
 
   @override
   bool get isAuth {
@@ -54,12 +60,31 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _token = await user.getIdToken();
     _email = user.email;
     _uid = user.uid;
+    _name = user.displayName;
     _expiryDate = DateTime.now().add(const Duration(hours: 1));
+
+    final response = await http.post(
+      Uri.parse("$_baseUrl/users"),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_token",
+      },
+      body: json.encode({
+        "uid": _uid,
+        "email": _email,
+        "name": _name,
+      }),
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw Exception("Erro ao salvar usuário no backend: ${response.body}");
+    }
 
     Storage.saveMap('userData', {
       'token': _token,
       'email': _email,
       'uId': _uid,
+      'name': _name,
       'expiryDate': _expiryDate!.toIso8601String(),
     });
 
@@ -80,6 +105,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _token = userData['token'];
     _email = userData['email'];
     _uid = userData['uId'];
+    _name = userData['name'];
     _expiryDate = expiryDate;
 
     _autoLogout();
@@ -91,6 +117,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _token = null;
     _email = null;
     _uid = null;
+    _name = null;
     _expiryDate = null;
     _clearLogoutTimer();
 

@@ -1,5 +1,6 @@
 lib/firebase_options.dart
 firebase.json
+lib/utils/app_config.dart
 # Miscellaneous
 *.class
 *.log
