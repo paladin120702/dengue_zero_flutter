@@ -39,6 +39,10 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     return isAuth ? _uid : null;
   }
 
+  String? get name {
+    return isAuth ? _name : null;
+  }
+
   @override
   Future<void> signInWithGoogle() async {
     final googleUser = await GoogleSignIn().signIn();
