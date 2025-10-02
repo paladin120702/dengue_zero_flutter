@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:dengue_zero/domain/usecases/denounces_places.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/image_input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewComplaintScreen extends StatefulWidget {
   const NewComplaintScreen({super.key});
@@ -17,7 +19,18 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
     _pickedImage = pickedImage;
   }
 
-  void _submitForm() {}
+  void _submitForm() {
+    if (_titleController.text.isEmpty || _pickedImage == null) {
+      return;
+    }
+
+    Provider.of<DenouncesPlaces>(context, listen: false).addDenounces(
+      _titleController.text,
+      _pickedImage!,
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {

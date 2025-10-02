@@ -4,7 +4,7 @@ import 'package:dengue_zero/domain/models/place_location.dart';
 class Denounces {
   final String id;
   final String title;
-  final PlaceLocation location;
+  final PlaceLocation? location;
   final File image;
 
   Denounces({

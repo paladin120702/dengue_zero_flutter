@@ -1,4 +1,6 @@
+import 'package:dengue_zero/domain/usecases/denounces_places.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyComplaintsScreen extends StatelessWidget {
   const MyComplaintsScreen({super.key});
@@ -16,8 +18,24 @@ class MyComplaintsScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text('Minhas Denúncias'),
+      body: Consumer<DenouncesPlaces>(
+        child: const Center(
+          child: Text('Nenhum local cadastrado!'),
+        ),
+        builder: (ctx, denouncesPlaces, ch) => denouncesPlaces.itemsCount == 0
+            ? ch ?? const SizedBox()
+            : ListView.builder(
+                itemCount: denouncesPlaces.itemsCount,
+                itemBuilder: (ctx, i) => ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: FileImage(
+                      denouncesPlaces.itemByIndex(i).image,
+                    ),
+                  ),
+                  title: Text(denouncesPlaces.itemByIndex(i).title),
+                  onTap: () {},
+                ),
+              ),
       ),
     );
   }

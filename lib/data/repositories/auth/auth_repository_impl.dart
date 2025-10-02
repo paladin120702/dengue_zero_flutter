@@ -92,7 +92,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
       'expiryDate': _expiryDate!.toIso8601String(),
     });
 
-    _autoLogout();
+    autoLogout();
     notifyListeners();
   }
 
@@ -112,7 +112,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _name = userData['name'];
     _expiryDate = expiryDate;
 
-    _autoLogout();
+    autoLogout();
     notifyListeners();
   }
 
@@ -123,7 +123,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _uid = null;
     _name = null;
     _expiryDate = null;
-    _clearLogoutTimer();
+    clearLogoutTimer();
 
     FirebaseAuth.instance.signOut();
     GoogleSignIn(scopes: ['email']).signOut();
@@ -133,13 +133,15 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     });
   }
 
-  void _autoLogout() {
-    _clearLogoutTimer();
+  @override
+  void autoLogout() {
+    clearLogoutTimer();
     final timeLogout = _expiryDate?.difference(DateTime.now()).inSeconds;
     _logoutTimer = Timer(Duration(seconds: timeLogout ?? 0), logout);
   }
 
-  void _clearLogoutTimer() {
+  @override
+  void clearLogoutTimer() {
     _logoutTimer?.cancel();
     _logoutTimer = null;
   }
