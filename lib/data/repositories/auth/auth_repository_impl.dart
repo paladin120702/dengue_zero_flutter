@@ -67,22 +67,22 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     _name = user.displayName;
     _expiryDate = DateTime.now().add(const Duration(hours: 1));
 
-    final response = await http.post(
-      Uri.parse("$_baseUrl/users"),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $_token",
-      },
-      body: json.encode({
-        "uid": _uid,
-        "email": _email,
-        "name": _name,
-      }),
-    );
+    // final response = await http.post(
+    //   Uri.parse("$_baseUrl/users"),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Authorization": "Bearer $_token",
+    //   },
+    //   body: json.encode({
+    //     "uid": _uid,
+    //     "email": _email,
+    //     "name": _name,
+    //   }),
+    // );
 
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception("Erro ao salvar usuário no backend: ${response.body}");
-    }
+    // if (response.statusCode != 200 && response.statusCode != 201) {
+    //   throw Exception("Erro ao salvar usuário no backend: ${response.body}");
+    // }
 
     Storage.saveMap('userData', {
       'token': _token,

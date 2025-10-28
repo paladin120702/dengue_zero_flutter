@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dengue_zero/domain/usecases/denounces_places.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/image_input.dart';
+import 'package:dengue_zero/ui/new_complaint/widgets/location_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,47 +35,54 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: SizedBox(
-            height: kToolbarHeight,
-            child: Image.asset(
-              'assets/images/Z.png',
-              fit: BoxFit.contain,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: SizedBox(
+          height: kToolbarHeight,
+          child: Image.asset(
+            'assets/images/Z.png',
+            fit: BoxFit.contain,
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: _titleController,
-                        decoration: InputDecoration(
-                          labelText: 'Título',
-                        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _titleController,
+                      decoration: const InputDecoration(
+                        labelText: 'Título',
                       ),
-                      SizedBox(height: 10),
-                      ImageInput(_selectImage),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 10),
+                    ImageInput(_selectImage),
+                    const SizedBox(height: 10),
+                    const LocationInput(),
+                  ],
                 ),
               ),
             ),
-            ElevatedButton.icon(
+          ),
+          SafeArea(
+            child: ElevatedButton.icon(
               onPressed: _submitForm,
-              label: Text('Adicionar'),
-              icon: Icon(Icons.add),
+              label: const Text('Adicionar'),
+              icon: const Icon(Icons.add),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

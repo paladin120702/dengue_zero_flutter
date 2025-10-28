@@ -52,14 +52,14 @@ class _ImageInputState extends State<ImageInput> {
                   width: double.infinity,
                   fit: BoxFit.cover,
                 )
-              : Text('Nenhuma imagem!'),
+              : const Text('Nenhuma imagem!'),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Expanded(
           child: TextButton.icon(
             onPressed: _takePicture,
-            label: Text('Tirar Foto'),
-            icon: Icon(Icons.camera),
+            label: const Text('Tirar Foto'),
+            icon: const Icon(Icons.camera),
           ),
         ),
       ],
