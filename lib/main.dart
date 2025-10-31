@@ -4,6 +4,7 @@ import 'package:dengue_zero/firebase_options.dart';
 import 'package:dengue_zero/ui/login/login_or_home.dart';
 import 'package:dengue_zero/ui/login/login_view_model.dart';
 import 'package:dengue_zero/ui/my_complaints/my_complaints_screen.dart';
+import 'package:dengue_zero/ui/my_complaints/my_complaints_view_model.dart';
 import 'package:dengue_zero/ui/new_complaint/new_complaint_screen.dart';
 import 'package:dengue_zero/ui/core/themes/all_themes.dart';
 import 'package:dengue_zero/utils/app_routes.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => DenouncesPlaces(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => MyComplaintsViewModel(ctx.read<DenouncesPlaces>()),
         ),
       ],
       child: MaterialApp(

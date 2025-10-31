@@ -3,6 +3,7 @@ import 'package:dengue_zero/domain/usecases/denounces_places.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/image_input.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/location_input.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class NewComplaintScreen extends StatefulWidget {
@@ -15,19 +16,33 @@ class NewComplaintScreen extends StatefulWidget {
 class _NewComplaintScreenState extends State<NewComplaintScreen> {
   final _titleController = TextEditingController();
   File? _pickedImage;
+  LatLng? _pickedPosition;
 
   void _selectImage(File pickedImage) {
-    _pickedImage = pickedImage;
+    setState(() {
+      _pickedImage = pickedImage;
+    });
+  }
+
+  void _selectPosition(LatLng position) {
+    setState(() {
+      _pickedPosition = position;
+    });
+  }
+
+  bool _isValidForm() {
+    return _titleController.text.isNotEmpty &&
+        _pickedImage != null &&
+        _pickedPosition != null;
   }
 
   void _submitForm() {
-    if (_titleController.text.isEmpty || _pickedImage == null) {
-      return;
-    }
+    if (!_isValidForm()) return;
 
     Provider.of<DenouncesPlaces>(context, listen: false).addDenounces(
       _titleController.text,
       _pickedImage!,
+      _pickedPosition!,
     );
 
     Navigator.of(context).pop();
@@ -57,14 +72,15 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
                   children: [
                     TextField(
                       controller: _titleController,
-                      decoration: const InputDecoration(
-                        labelText: 'Título',
-                      ),
+                      decoration: const InputDecoration(labelText: 'Título'),
+                      onChanged: (_) {
+                        setState(() {});
+                      },
                     ),
                     const SizedBox(height: 10),
                     ImageInput(_selectImage),
                     const SizedBox(height: 10),
-                    const LocationInput(),
+                    LocationInput(_selectPosition),
                   ],
                 ),
               ),
@@ -72,8 +88,8 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
           ),
           SafeArea(
             child: ElevatedButton.icon(
-              onPressed: _submitForm,
-              label: const Text('Adicionar'),
+              onPressed: _isValidForm() ? _submitForm : null,
+              label: const Text('Denunciar'),
               icon: const Icon(Icons.add),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
