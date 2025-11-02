@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dengue_zero/domain/usecases/denounces_places.dart';
+import 'package:dengue_zero/domain/providers/denounces_places.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/image_input.dart';
 import 'package:dengue_zero/ui/new_complaint/widgets/location_input.dart';
 import 'package:flutter/material.dart';

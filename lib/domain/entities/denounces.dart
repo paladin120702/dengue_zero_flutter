@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dengue_zero/domain/models/place_location.dart';
+import 'package:dengue_zero/domain/entities/place_location.dart';
 
 class Denounces {
   final String id;

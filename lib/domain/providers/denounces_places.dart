@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:dengue_zero/data/services/google_maps/location_maps.dart';
-import 'package:dengue_zero/domain/models/denounces.dart';
-import 'package:dengue_zero/domain/models/place_location.dart';
+import 'package:dengue_zero/domain/entities/denounces.dart';
+import 'package:dengue_zero/domain/entities/place_location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

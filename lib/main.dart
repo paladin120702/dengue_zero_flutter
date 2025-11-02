@@ -1,5 +1,5 @@
 import 'package:dengue_zero/data/repositories/auth/auth_repository_impl.dart';
-import 'package:dengue_zero/domain/usecases/denounces_places.dart';
+import 'package:dengue_zero/domain/providers/denounces_places.dart';
 import 'package:dengue_zero/firebase_options.dart';
 import 'package:dengue_zero/ui/login/login_or_home.dart';
 import 'package:dengue_zero/ui/login/login_view_model.dart';

@@ -1,5 +1,5 @@
-import 'package:dengue_zero/domain/models/denounces.dart';
-import 'package:dengue_zero/domain/usecases/denounces_places.dart';
+import 'package:dengue_zero/domain/entities/denounces.dart';
+import 'package:dengue_zero/domain/providers/denounces_places.dart';
 import 'package:flutter/material.dart';
 
 class MyComplaintsViewModel with ChangeNotifier {
@@ -18,7 +18,7 @@ class MyComplaintsViewModel with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    await _model.loadDenounces(); // chama o método do Model
+    await _model.loadDenounces();
 
     _isLoading = false;
     notifyListeners();
