@@ -41,7 +41,6 @@ class MyComplaintsScreen extends StatelessWidget {
                   ),
                 ),
                 title: Text(vm.itemByIndex(i).title),
-                subtitle: Text(vm.itemByIndex(i).location!.address!),
               ),
             );
           }

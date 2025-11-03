@@ -1,4 +1,5 @@
 import 'package:dengue_zero/data/repositories/auth/auth_repository_impl.dart';
+import 'package:dengue_zero/data/repositories/denounces/denounces_repository_impl.dart';
 import 'package:dengue_zero/domain/providers/denounces_places.dart';
 import 'package:dengue_zero/firebase_options.dart';
 import 'package:dengue_zero/ui/login/login_or_home.dart';
@@ -31,8 +32,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => LoginViewModel(ctx.read<AuthRepositoryImpl>()),
         ),
+        ChangeNotifierProvider<DenouncesRepositoryImpl>(
+          create: (ctx) => DenouncesRepositoryImpl(
+            auth: ctx.read<AuthRepositoryImpl>(),
+          ),
+        ),
         ChangeNotifierProvider(
-          create: (_) => DenouncesPlaces(),
+          create: (ctx) => DenouncesPlaces(
+            denouncesRepository: ctx.read<DenouncesRepositoryImpl>(),
+          ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => MyComplaintsViewModel(ctx.read<DenouncesPlaces>()),

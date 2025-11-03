@@ -1,12 +1,17 @@
 import 'dart:io';
-import 'dart:math';
-import 'package:dengue_zero/data/services/google_maps/location_maps.dart';
+import 'package:dengue_zero/data/repositories/denounces/denounces_repository.dart';
+import 'package:dengue_zero/data/services/firebase_storage/fb_storage.dart';
 import 'package:dengue_zero/domain/entities/denounces.dart';
-import 'package:dengue_zero/domain/entities/place_location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DenouncesPlaces with ChangeNotifier {
+  final DenouncesRepository denouncesRepository;
+
+  DenouncesPlaces({
+    required this.denouncesRepository,
+  });
+
   final List<Denounces> _items = [];
 
   List<Denounces> get items {
@@ -26,18 +31,24 @@ class DenouncesPlaces with ChangeNotifier {
   }
 
   Future<void> addDenounces(String title, File image, LatLng position) async {
-    String address = await LocationMaps.getAddressFrom(position);
-    final newDenounces = Denounces(
-      id: Random().nextDouble().toString(),
-      title: title,
-      image: image,
-      location: PlaceLocation(
+    final imageUrl = await FbStorage.uploadToFirebase(image);
+
+    if (imageUrl == null) {
+      debugPrint('Erro: a URL da imagem é nula');
+      return;
+    }
+
+    try {
+      await denouncesRepository.createDenounces(
+        title: title,
+        imageUrl: imageUrl,
         latitude: position.latitude,
         longitude: position.longitude,
-        address: address,
-      ),
-    );
-    _items.add(newDenounces);
+      );
+    } catch (e, stackTrace) {
+      debugPrint('Erro: $e');
+      debugPrintStack(label: 'Stack trace:', stackTrace: stackTrace);
+    }
     notifyListeners();
   }
 }

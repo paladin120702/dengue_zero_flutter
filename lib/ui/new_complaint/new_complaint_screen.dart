@@ -39,13 +39,18 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
   void _submitForm() {
     if (!_isValidForm()) return;
 
-    Provider.of<DenouncesPlaces>(context, listen: false).addDenounces(
-      _titleController.text,
-      _pickedImage!,
-      _pickedPosition!,
-    );
-
-    Navigator.of(context).pop();
+    try {
+      Provider.of<DenouncesPlaces>(context, listen: false).addDenounces(
+        _titleController.text,
+        _pickedImage!,
+        _pickedPosition!,
+      );
+    } catch (e, stackTrace) {
+      debugPrint('Erro ao adicionar denúncia $e');
+      debugPrintStack(label: 'Stack trace:', stackTrace: stackTrace);
+    } finally {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
