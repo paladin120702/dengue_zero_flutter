@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthRepositoryImpl>(
+        ChangeNotifierProvider(
           create: (_) => AuthRepositoryImpl(),
         ),
         ChangeNotifierProvider(
           create: (ctx) => LoginViewModel(ctx.read<AuthRepositoryImpl>()),
         ),
-        ChangeNotifierProvider<DenouncesRepositoryImpl>(
+        ChangeNotifierProvider(
           create: (ctx) => DenouncesRepositoryImpl(
             auth: ctx.read<AuthRepositoryImpl>(),
           ),
@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => MyComplaintsViewModel(ctx.read<DenouncesPlaces>()),
+          create: (ctx) =>
+              MyComplaintsViewModel(ctx.read<DenouncesRepositoryImpl>()),
         ),
       ],
       child: MaterialApp(

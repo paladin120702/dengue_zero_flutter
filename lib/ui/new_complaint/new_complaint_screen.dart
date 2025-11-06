@@ -46,7 +46,7 @@ class _NewComplaintScreenState extends State<NewComplaintScreen> {
         _pickedPosition!,
       );
     } catch (e, stackTrace) {
-      debugPrint('Erro ao adicionar denúncia $e');
+      debugPrint('Error adding complaint: $e');
       debugPrintStack(label: 'Stack trace:', stackTrace: stackTrace);
     } finally {
       Navigator.of(context).pop();

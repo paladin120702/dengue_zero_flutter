@@ -1,26 +1,36 @@
+import 'package:dengue_zero/data/repositories/denounces/denounces_repository.dart';
 import 'package:dengue_zero/domain/entities/denounces.dart';
-import 'package:dengue_zero/domain/providers/denounces_places.dart';
 import 'package:flutter/material.dart';
 
 class MyComplaintsViewModel with ChangeNotifier {
-  final DenouncesPlaces _model;
-  MyComplaintsViewModel(this._model);
+  final DenouncesRepository _repository;
+  MyComplaintsViewModel(this._repository);
+
+  final List<Denounces> _items = [];
+
+  List<Denounces> get items {
+    return [..._items];
+  }
+
+  Denounces itemByIndex(int index) {
+    return _items[index];
+  }
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
-  List<Denounces> get items => _model.items;
-  int get itemsCount => _model.itemsCount;
-
-  Denounces itemByIndex(int index) => _model.itemByIndex(index);
 
   Future<void> loadDenounces() async {
     _isLoading = true;
     notifyListeners();
 
-    await _model.loadDenounces();
-
-    _isLoading = false;
-    notifyListeners();
+    try {
+      final fetched = await _repository.fetchDenounces();
+      _items.clear();
+      _items.addAll(fetched);
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error loading reports: $e');
+    }
   }
 }

@@ -18,7 +18,7 @@ class LoginViewModel with ChangeNotifier {
     } on AuthException catch (error) {
       onError(error.toString());
     } catch (e) {
-      onError('Erro inesperado ao fazer login com Google.');
+      onError('Unexpected error while logging in with Google.');
     } finally {
       _setLoading(false);
     }

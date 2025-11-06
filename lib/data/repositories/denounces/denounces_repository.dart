@@ -1,3 +1,5 @@
+import 'package:dengue_zero/domain/entities/denounces.dart';
+
 abstract class DenouncesRepository {
   Future<Map<String, dynamic>> createDenounces({
     required String title,
@@ -5,5 +7,5 @@ abstract class DenouncesRepository {
     required double latitude,
     required double longitude,
   });
-  Future<List<Map<String, dynamic>>> fetchDenounces();
+  Future<List<Denounces>> fetchDenounces();
 }

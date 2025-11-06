@@ -81,7 +81,7 @@ class AuthRepositoryImpl with ChangeNotifier implements AuthRepository {
     );
 
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception("Erro ao salvar usuário no backend: ${response.body}");
+      throw Exception("Error saving user in backend: ${response.body}");
     }
 
     Storage.saveMap('userData', {

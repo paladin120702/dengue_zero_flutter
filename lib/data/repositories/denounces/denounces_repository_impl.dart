@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dengue_zero/data/repositories/auth/auth_repository.dart';
 import 'package:dengue_zero/data/repositories/denounces/denounces_repository.dart';
+import 'package:dengue_zero/domain/entities/denounces.dart';
 import 'package:dengue_zero/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -44,18 +45,30 @@ class DenouncesRepositoryImpl
       try {
         return jsonDecode(response.body);
       } catch (e) {
-        print(
-            'ERRO FATAL de Parsing JSON na resposta da denúncia. Corpo: ${response.body}');
+        debugPrint(
+            'FATAL ERROR parsing JSON in the complaint response. Body: ${response.body}');
         return {};
       }
     } else {
-      throw Exception('Erro ao criar denúncia: ${response.statusCode}');
+      throw Exception('Error creating complaint: ${response.statusCode}');
     }
   }
 
   @override
-  Future<List<Map<String, dynamic>>> fetchDenounces() {
-    // TODO: implement fetchDenounces
-    throw UnimplementedError();
+  Future<List<Denounces>> fetchDenounces() async {
+    final token = auth.token;
+    final url = Uri.parse('${AppConfig.backendUrl}/denounces/user');
+
+    final response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $token",
+    });
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((json) => Denounces.fromJson(json)).toList();
+    } else {
+      throw Exception('Error loading data: ${response.statusCode}');
+    }
   }
 }

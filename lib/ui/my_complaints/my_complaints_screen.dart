@@ -29,15 +29,15 @@ class MyComplaintsScreen extends StatelessWidget {
         builder: (ctx, vm, _) {
           if (vm.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (vm.itemsCount == 0) {
+          } else if (vm.items.isEmpty) {
             return const Center(child: Text('Nenhuma denúncia cadastrada!'));
           } else {
             return ListView.builder(
-              itemCount: vm.itemsCount,
+              itemCount: vm.items.length,
               itemBuilder: (ctx, i) => ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: FileImage(
-                    vm.itemByIndex(i).image,
+                  backgroundImage: NetworkImage(
+                    vm.itemByIndex(i).imageUrl!,
                   ),
                 ),
                 title: Text(vm.itemByIndex(i).title),
