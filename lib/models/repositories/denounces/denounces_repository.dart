@@ -1,4 +1,4 @@
-import 'package:dengue_zero/domain/entities/denounces.dart';
+import 'package:dengue_zero/models/entities/denounces.dart';
 
 abstract class DenouncesRepository {
   Future<Map<String, dynamic>> createDenounces({

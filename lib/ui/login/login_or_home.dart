@@ -1,5 +1,5 @@
-import 'package:dengue_zero/data/repositories/auth/auth_repository.dart';
-import 'package:dengue_zero/data/repositories/auth/auth_repository_impl.dart';
+import 'package:dengue_zero/models/repositories/auth/auth_repository.dart';
+import 'package:dengue_zero/models/repositories/auth/auth_repository_impl.dart';
 import 'package:dengue_zero/ui/home/overview_screen.dart';
 import 'package:dengue_zero/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';

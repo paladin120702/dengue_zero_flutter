@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:dengue_zero/data/repositories/auth/auth_repository.dart';
-import 'package:dengue_zero/data/repositories/denounces/denounces_repository.dart';
-import 'package:dengue_zero/domain/entities/denounces.dart';
+import 'package:dengue_zero/models/repositories/auth/auth_repository.dart';
+import 'package:dengue_zero/models/repositories/denounces/denounces_repository.dart';
+import 'package:dengue_zero/models/entities/denounces.dart';
 import 'package:dengue_zero/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

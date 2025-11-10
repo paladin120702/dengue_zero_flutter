@@ -1,42 +1,35 @@
-import 'package:dengue_zero/data/services/google_maps/location_maps.dart';
+import 'package:dengue_zero/models/services/google_maps/location_maps.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-class LocationInput extends StatefulWidget {
-  final Function onSelectPosition;
-  const LocationInput(this.onSelectPosition, {super.key});
+class LocationInput extends StatelessWidget {
+  final LatLng? location;
+  final Future<void> Function(LatLng position) onSelectPosition;
 
-  @override
-  State<LocationInput> createState() => _LocationInputState();
-}
+  const LocationInput({
+    super.key,
+    required this.location,
+    required this.onSelectPosition,
+  });
 
-class _LocationInputState extends State<LocationInput> {
-  String? _previewImageUrl;
-
-  void _showPreview(double lat, double lng) {
-    final staticMapImageUrl = LocationMaps.generateLocationPreviewImage(
-      latitude: lat,
-      longitude: lng,
-    );
-
-    setState(() {
-      _previewImageUrl = staticMapImageUrl;
-    });
-  }
-
-  Future<void> _getCurrentUserLocation() async {
+  Future<void> _getCurrentUserLocation(BuildContext context) async {
     final locData = await Location().getLocation();
 
     if (locData.latitude == null || locData.longitude == null) {
       return;
     }
 
-    _showPreview(locData.latitude!, locData.longitude!);
-    widget.onSelectPosition(LatLng(
-      locData.latitude!,
-      locData.longitude!,
-    ));
+    final selectedPosition = LatLng(locData.latitude!, locData.longitude!);
+    await onSelectPosition(selectedPosition);
+  }
+
+  String? get previewImageUrl {
+    if (location == null) return null;
+    return LocationMaps.generateLocationPreviewImage(
+      latitude: location!.latitude,
+      longitude: location!.longitude,
+    );
   }
 
   @override
@@ -50,23 +43,18 @@ class _LocationInputState extends State<LocationInput> {
           decoration: BoxDecoration(
             border: Border.all(width: 1),
           ),
-          child: _previewImageUrl == null
+          child: previewImageUrl == null
               ? const Text('Nenhuma localização!')
               : Image.network(
-                  _previewImageUrl!,
+                  previewImageUrl!,
                   fit: BoxFit.cover,
                   width: double.infinity,
                 ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton.icon(
-              onPressed: _getCurrentUserLocation,
-              label: const Text('Localização Atual'),
-              icon: const Icon(Icons.location_on),
-            ),
-          ],
+        TextButton.icon(
+          onPressed: () => _getCurrentUserLocation(context),
+          label: const Text('Localização Atual'),
+          icon: const Icon(Icons.location_on),
         ),
       ],
     );

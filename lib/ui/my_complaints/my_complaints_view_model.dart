@@ -1,5 +1,5 @@
-import 'package:dengue_zero/data/repositories/denounces/denounces_repository.dart';
-import 'package:dengue_zero/domain/entities/denounces.dart';
+import 'package:dengue_zero/models/repositories/denounces/denounces_repository.dart';
+import 'package:dengue_zero/models/entities/denounces.dart';
 import 'package:flutter/material.dart';
 
 class MyComplaintsViewModel with ChangeNotifier {

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:dengue_zero/data/repositories/auth/auth_repository.dart';
-import 'package:dengue_zero/data/services/local_storage/storage.dart';
+import 'package:dengue_zero/models/repositories/auth/auth_repository.dart';
+import 'package:dengue_zero/models/services/local_storage/storage.dart';
 import 'package:dengue_zero/utils/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

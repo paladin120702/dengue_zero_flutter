@@ -1,6 +1,5 @@
-import 'package:dengue_zero/data/repositories/auth/auth_repository_impl.dart';
-import 'package:dengue_zero/data/repositories/denounces/denounces_repository_impl.dart';
-import 'package:dengue_zero/domain/providers/denounces_places.dart';
+import 'package:dengue_zero/models/repositories/auth/auth_repository_impl.dart';
+import 'package:dengue_zero/models/repositories/denounces/denounces_repository_impl.dart';
 import 'package:dengue_zero/firebase_options.dart';
 import 'package:dengue_zero/ui/login/login_or_home.dart';
 import 'package:dengue_zero/ui/login/login_view_model.dart';
@@ -8,6 +7,7 @@ import 'package:dengue_zero/ui/my_complaints/my_complaints_screen.dart';
 import 'package:dengue_zero/ui/my_complaints/my_complaints_view_model.dart';
 import 'package:dengue_zero/ui/new_complaint/new_complaint_screen.dart';
 import 'package:dengue_zero/ui/core/themes/all_themes.dart';
+import 'package:dengue_zero/ui/new_complaint/new_complaint_view_model.dart';
 import 'package:dengue_zero/utils/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,14 +33,12 @@ class MyApp extends StatelessWidget {
           create: (ctx) => LoginViewModel(ctx.read<AuthRepositoryImpl>()),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => DenouncesRepositoryImpl(
-            auth: ctx.read<AuthRepositoryImpl>(),
-          ),
+          create: (ctx) =>
+              DenouncesRepositoryImpl(auth: ctx.read<AuthRepositoryImpl>()),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => DenouncesPlaces(
-            denouncesRepository: ctx.read<DenouncesRepositoryImpl>(),
-          ),
+          create: (ctx) =>
+              NewComplaintViewModel(ctx.read<DenouncesRepositoryImpl>()),
         ),
         ChangeNotifierProvider(
           create: (ctx) =>
