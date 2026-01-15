@@ -1,4 +1,5 @@
 import 'package:dengue_zero/ui/my_complaints/my_complaints_view_model.dart';
+import 'package:dengue_zero/ui/my_complaints/widgets/complaint_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,14 +35,13 @@ class MyComplaintsScreen extends StatelessWidget {
           } else {
             return ListView.builder(
               itemCount: vm.items.length,
-              itemBuilder: (ctx, i) => ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    vm.itemByIndex(i).imageUrl!,
-                  ),
-                ),
-                title: Text(vm.itemByIndex(i).title),
-              ),
+              itemBuilder: (ctx, i) {
+                final item = vm.itemByIndex(i);
+                return ComplaintCard(
+                  title: item.title,
+                  imageUrl: item.imageUrl!,
+                );
+              },
             );
           }
         },
