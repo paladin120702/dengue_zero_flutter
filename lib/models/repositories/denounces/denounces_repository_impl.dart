@@ -23,7 +23,7 @@ class DenouncesRepositoryImpl
     final url = Uri.parse('${AppConfig.backendUrl}/denounces');
 
     final body = {
-      'titulo': title,
+      'title': title,
       'imgUrl': imageUrl,
       'latitude': latitude.toString(),
       'longitude': longitude.toString(),
@@ -63,7 +63,7 @@ class DenouncesRepositoryImpl
       "Content-Type": "application/json",
       "Authorization": "Bearer $token",
     });
-
+    
     if (response.statusCode == 200) {
       final List data = jsonDecode(response.body);
       return data.map((json) => Denounces.fromJson(json)).toList();

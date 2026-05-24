@@ -19,7 +19,7 @@ class Denounces {
   factory Denounces.fromJson(Map<String, dynamic> json) {
     return Denounces(
       id: json['id'].toString(),
-      title: json['titulo'],
+      title: json['title'],
       imageUrl: json['imgUrl'],
       location: PlaceLocation(
         latitude: double.parse(json['latitude'].toString()),
